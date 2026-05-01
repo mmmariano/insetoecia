@@ -567,6 +567,170 @@ footer {
   .strip-inner { grid-template-columns: 1fr 1fr; }
   .team-row { grid-template-columns: 1fr; }
 }
+  /* ── TABS STYLES ── */
+.tabs-container {
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,149,216,.05);
+}
+
+.tabs-nav {
+  display: flex;
+  background: var(--light);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+.tabs-nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+.tab-btn {
+  padding: 20px 28px;
+  border: none;
+  background: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .3s;
+  position: relative;
+}
+
+.tab-btn:hover { color: var(--blue); }
+
+.tab-btn.active {
+  color: var(--blue);
+  background: #fff;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--blue);
+}
+
+.tabs-content { padding: 44px; }
+
+.tab-pane {
+  display: none;
+  animation: fadeIn .5s ease;
+}
+.tab-pane.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-pane h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.tab-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.team-mini-row {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.team-mini-row span {
+  background: var(--light);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.team-mini-row span strong { color: var(--blue); }
+
+.tab-info-card {
+  background: var(--light);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+.info-item {
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--dark);
+}
+
+.mv-box {
+  padding: 30px;
+  background: var(--light);
+  border-radius: 20px;
+  text-align: center;
+}
+.mv-ico { font-size: 40px; margin-bottom: 15px; }
+.mv-box h4 { 
+  font-family: 'DM Serif Display', serif; 
+  font-size: 22px; 
+  color: var(--blue); 
+  margin-bottom: 10px; 
+}
+
+.values-list { list-style: none; }
+.values-list li {
+  margin-bottom: 15px;
+  padding-left: 25px;
+  position: relative;
+  line-height: 1.6;
+}
+.values-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0; color: var(--green);
+  font-weight: bold;
+}
+
+.services-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.services-tags span {
+  background: var(--blue);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.brands-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.brand-tag {
+  border: 1px solid var(--border);
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  transition: all .3s;
+}
+.brand-tag:hover {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+@media (max-width: 768px) {
+  .tab-grid { grid-template-columns: 1fr; }
+  .tabs-content { padding: 30px 20px; }
+}
 </style>
 </head>
 <body>
@@ -845,7 +1009,107 @@ footer {
     </div>
   </div>
 </section>
+<!-- INFO TABS SECTION -->
+<section class="section tabs-section" id="conheca">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom: 50px;">
+      <span class="sec-label">Transparência e Solidez</span>
+      <h2 class="sec-h">Conheça a <em>Insetos & Cia</em></h2>
+    </div>
 
+    <div class="tabs-container reveal">
+      <!-- Botões das Abas -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab(event, 'quem-somos')">Quem Somos</button>
+        <button class="tab-btn" onclick="openTab(event, 'historia')">Nossa História</button>
+        <button class="tab-btn" onclick="openTab(event, 'missao-visao')">Missão e Visão</button>
+        <button class="tab-btn" onclick="openTab(event, 'valores')">Valores</button>
+        <button class="tab-btn" onclick="openTab(event, 'servicos-lista')">Nossos Serviços</button>
+        <button class="tab-btn" onclick="openTab(event, 'produtos')">Produtos</button>
+      </div>
+
+      <!-- Conteúdo das Abas -->
+      <div class="tabs-content">
+        
+        <!-- Aba: Quem Somos -->
+        <div id="quem-somos" class="tab-pane active">
+          <div class="tab-grid">
+            <div class="tab-text">
+              <h3>Controle de Pragas com Especialistas</h3>
+              <p>Nosso trabalho é o controle de pragas urbanas, controle de vetores aéreos, sanitização e tratamento em paletes para exportação usados no setor madeireiro, frigoríficos, indústrias de transformadores elétricos, etc.</p>
+              <div class="team-mini-row">
+                <span><strong>01</strong> Eng. Agrônoma</span>
+                <span><strong>03</strong> Controladores</span>
+                <span><strong>01</strong> Aux. Administrativo</span>
+              </div>
+            </div>
+            <div class="tab-info-card">
+              <div class="info-item"><strong>Equipe:</strong> 05 Colaboradores</div>
+              <div class="info-item"><strong>Responsável:</strong> Cláudia (Eng. Agrônoma)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba: História -->
+        <div id="historia" class="tab-pane">
+          <h3>Nossa Trajetória</h3>
+          <p>Somos uma empresa de prestação de serviços que atua no ramo de desinsetização de ambientes industriais, comerciais e residenciais, criada em <strong>Julho de 2013</strong> no município de Aripuanã-MT.</p>
+          <p>Possuímos Alvará Sanitário Estadual, licença ambiental e registro no MAPA. Em <strong>Agosto de 2016</strong>, expandimos nossas operações para realizar <strong>Tratamento Térmico HT</strong>, como franqueado FITOLOG, atendendo setores estratégicos da nossa economia regional.</p>
+        </div>
+
+        <!-- Aba: Missão e Visão -->
+        <div id="missao-visao" class="tab-pane">
+          <div class="tab-grid">
+            <div class="mv-box">
+              <div class="mv-ico">🎯</div>
+              <h4>Missão</h4>
+              <p>Oferecer serviços de qualidade com responsabilidade, segurança e confiabilidade.</p>
+            </div>
+            <div class="mv-box">
+              <div class="mv-ico">🚀</div>
+              <h4>Visão</h4>
+              <p>Ser uma empresa de referência Estadual, nas áreas de atuação, pela qualidade e confiabilidade dos serviços prestados.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba: Valores -->
+        <div id="valores" class="tab-pane">
+          <h3>Nossos Pilares</h3>
+          <ul class="values-list">
+            <li><strong>Respeito e Responsabilidade:</strong> Compromisso com a vida, com o patrimônio e meio ambiente.</li>
+            <li><strong>Integridade:</strong> Honestidade e comprometimento total para com nossos clientes e colaboradores.</li>
+            <li><strong>Confiança:</strong> Busca contínua pela excelência através de produtos de alta performance e transparência.</li>
+          </ul>
+        </div>
+
+        <!-- Aba: Serviços -->
+        <div id="servicos-lista" class="tab-pane">
+          <h3>Soluções Completas</h3>
+          <div class="services-tags">
+            <span>Desinsetização</span><span>Desratização</span><span>Descupinização</span>
+            <span>Borrifação Espacial</span><span>Termonebulização (Fumacê)</span>
+            <span>Limpeza de Forro</span><span>Limpeza de Caixa d'Água</span>
+            <span>Sanitização</span><span>Tratamento Térmico HT</span>
+          </div>
+        </div>
+
+        <!-- Aba: Produtos -->
+        <div id="produtos" class="tab-pane">
+          <h3>Marcas de Confiança</h3>
+          <p style="margin-bottom: 20px;">Buscamos a excelência utilizando apenas insumos das grandes marcas do mercado Nacional:</p>
+          <div class="brands-grid">
+            <div class="brand-tag">Bayer</div><div class="brand-tag">Syngenta</div>
+            <div class="brand-tag">Dominus</div><div class="brand-tag">Rogama</div>
+            <div class="brand-tag">Dipil</div><div class="brand-tag">Fersol</div>
+            <div class="brand-tag">ChemoNE</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 <!-- WHY -->
 <section class="section why-section">
   <div class="container">
@@ -1103,6 +1367,28 @@ function sendWA(){
   let t=`Olá! Vim pelo site da *Insetos & Cia*.\n\n*Nome:* ${n}\n*Telefone:* ${p}\n*Ambiente:* ${e}\n*Serviço:* ${s}`;
   if(m) t+=`\n*Observações:* ${m}`;
   window.open('https://wa.me/5566984296918?text='+encodeURIComponent(t),'_blank');
+}
+  // Function for Tabs
+function openTab(evt, tabName) {
+  var i, tabpane, tablinks;
+  
+  // Esconde todos os conteúdos das abas
+  tabpane = document.getElementsByClassName("tab-pane");
+  for (i = 0; i < tabpane.length; i++) {
+    tabpane[i].style.display = "none";
+    tabpane[i].classList.remove("active");
+  }
+
+  // Remove a classe "active" de todos os botões
+  tablinks = document.getElementsByClassName("tab-btn");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Mostra a aba atual e adiciona a classe active ao botão
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.className += " active";
 }
 </script>
 </body>
