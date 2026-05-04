@@ -214,7 +214,32 @@ a { text-decoration: none; color: inherit; }
   opacity: 0; animation: heroright .9s .3s forwards;
 }
 @keyframes heroright { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+/* Procure por .hero-right no seu CSS e adicione um padding para os cards não sumirem */
+.hero-right {
+  position: relative;
+  opacity: 0; 
+  animation: heroright .9s .3s forwards;
+  padding: 20px; /* Adiciona espaço para as caixinhas flutuarem sem cortar */
+}
 
+/* Garante que o wrap da imagem continue com o efeito de zoom, mas sem influenciar os cards */
+.hero-img-wrap {
+  position: relative; 
+  border-radius: 24px; 
+  overflow: hidden; /* O corte agora só afeta a imagem interna */
+  box-shadow: 0 40px 80px rgba(0,149,216,.15), 0 0 0 1px var(--border);
+  aspect-ratio: 4/3;
+  z-index: 1;
+}
+
+/* Ajuste fino da posição dos cards para garantir que fiquem sobre a imagem */
+.hero-float-card {
+  z-index: 2; /* Fica acima da imagem */
+}
+
+.hero-float-cert {
+  z-index: 2; /* Fica acima da imagem */
+}
 .hero-img-wrap {
   position: relative; border-radius: 24px; overflow: hidden;
   box-shadow: 0 40px 80px rgba(0,149,216,.15), 0 0 0 1px var(--border);
@@ -792,21 +817,25 @@ footer {
 </div>
       
     </div>
-    <div class="hero-right">
-      <div class="hero-img-wrap">
-        <img src="desinsetizacao2.jpeg" alt="Controle profissional de pragas">
-        <div class="hero-float-card">
-          <div class="float-label">ATENDIMENTO</div>
-          <div class="float-num">2013</div>
-          <div class="float-sub">Fundada em Aripuanã</div>
-        </div>
-        <div class="hero-float-cert">
-          <div class="cert-icon">✓</div>
-          <div class="cert-label">REG. MAPA</div>
-        </div>
-      </div>
-    </div>
+    
+<div class="hero-right">
+  <!-- A div hero-img-wrap agora contém APENAS a imagem -->
+  <div class="hero-img-wrap">
+    <img src="desinsetizacao2.jpeg" alt="Controle profissional de pragas">
   </div>
+
+  <!-- Os cards flutuantes agora ficam FORA do wrap, para não serem cortados -->
+  <div class="hero-float-card">
+    <div class="float-label">ATENDIMENTO</div>
+    <div class="float-num">2013</div>
+    <div class="float-sub">Fundada em Aripuanã</div>
+  </div>
+  
+  <div class="hero-float-cert">
+    <div class="cert-icon">✓</div>
+    <div class="cert-label">REG. MAPA</div>
+  </div>
+</div>
 </section>
 
 <!-- MARQUEE -->
