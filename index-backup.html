@@ -11,15 +11,17 @@
   --blue: #0095d8;
   --blue2: #0095d9;
   --green: #a6ce37;
-  --white: #ffffff;
-  --bg: #e0f4ff;
+  --white: #fffeff;
+  --bg: #ffffff;
   --dark: #0a1628;
-  --muted: #4a5568;
+  --muted: #667085;
   --light: #f0f8ff;
-  --border: rgba(0,149,216,.15);
+  --border: rgba(0,149,216,.12);
   --green-light: rgba(166,206,55,.12);
 }
 
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg);
@@ -27,17 +29,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
-.section, .svc-section, .ba-section, .about-section, .contact-section {
-  background: transparent !important;
-}
-
-.svc-card, .why-card, .tabs-container {
-  background: #ffffff !important;
-  box-shadow: 0 10px 30px rgba(0,149,216,0.05);
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
 a { text-decoration: none; color: inherit; }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -88,12 +79,11 @@ a { text-decoration: none; color: inherit; }
 /* ── NAV ── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-  height: auto !important;
-  padding: 20px 0 15px;
-  background: rgba(224, 244, 255, 0.95);
-  backdrop-filter: blur(10px);
+  height: 68px; display: flex; align-items: center;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
+  transition: all .3s;
 }
 .nav.scrolled {
   background: rgba(255,255,255,.97);
@@ -101,15 +91,10 @@ a { text-decoration: none; color: inherit; }
 }
 .nav-inner {
   max-width: 1200px; margin: 0 auto; padding: 0 28px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
 }
 .nav-logo {
-  height: 100px !important;
-  width: auto;
-  object-fit: contain;
+  height: 42px; object-fit: contain;
 }
 .nav-logo-fallback {
   font-family: 'DM Serif Display', serif;
@@ -117,16 +102,21 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: -.5px;
 }
 .nav-links {
-  display: flex; gap: 40px; list-style: none; align-items: center;
+  display: flex; gap: 36px; list-style: none; align-items: center;
 }
 .nav-links a {
-  font-size: 14px; font-weight: 600; color: #0a1628;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color .2s;
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  letter-spacing: .3px; transition: color .2s;
 }
-.nav-links a:hover { color: var(--blue); }
-.nav-btn { display: none !important; }
+.nav-links a:hover { color: var(--dark); }
+.nav-btn {
+  background: var(--blue) !important; color: #fff !important;
+  padding: 10px 22px; border-radius: 100px;
+  font-size: 13px !important; font-weight: 600 !important;
+  transition: all .25s !important; letter-spacing: .3px !important;
+  box-shadow: 0 4px 20px rgba(0,149,216,.3);
+}
+.nav-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px rgba(0,149,216,.4) !important; }
 
 /* hamburger */
 .burger {
@@ -160,465 +150,148 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 8px 30px rgba(0,149,216,.3);
 }
 
-/* ════════════════════════════════════════════════
-   HERO — VERSÃO PREMIUM REFORMULADA
-════════════════════════════════════════════════ */
-body { padding-top: 160px; }
-
+/* ── HERO ── */
 .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  padding: 0;
+  min-height: 100vh; padding-top: 68px;
+  display: flex; align-items: center;
+  position: relative; z-index: 1; overflow: hidden;
 }
-
-/* Fundo especial da hero com mesh gradient animado */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(0,149,216,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 20% 70%, rgba(166,206,55,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(0,149,216,0.1) 0%, transparent 50%),
-    var(--bg);
-  animation: heroBgPulse 8s ease-in-out infinite alternate;
-}
-@keyframes heroBgPulse {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-/* Partículas flutuantes */
-.hero-particles {
-  position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
-}
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0;
-  animation: particleFly linear infinite;
-}
-.particle:nth-child(1)  { width:6px;  height:6px;  background:var(--blue);  left:10%;  animation-duration:12s; animation-delay:0s;   }
-.particle:nth-child(2)  { width:4px;  height:4px;  background:var(--green); left:25%;  animation-duration:15s; animation-delay:2s;   }
-.particle:nth-child(3)  { width:8px;  height:8px;  background:var(--blue);  left:40%;  animation-duration:10s; animation-delay:1s;   }
-.particle:nth-child(4)  { width:5px;  height:5px;  background:var(--green); left:60%;  animation-duration:14s; animation-delay:3s;   }
-.particle:nth-child(5)  { width:3px;  height:3px;  background:var(--blue);  left:75%;  animation-duration:11s; animation-delay:0.5s; }
-.particle:nth-child(6)  { width:7px;  height:7px;  background:var(--green); left:88%;  animation-duration:16s; animation-delay:4s;   }
-.particle:nth-child(7)  { width:4px;  height:4px;  background:var(--blue);  left:5%;   animation-duration:13s; animation-delay:2.5s; }
-.particle:nth-child(8)  { width:5px;  height:5px;  background:var(--green); left:50%;  animation-duration:9s;  animation-delay:1.5s; }
-@keyframes particleFly {
-  0%   { transform: translateY(110vh) scale(0); opacity: 0; }
-  10%  { opacity: 0.6; }
-  90%  { opacity: 0.4; }
-  100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-
-/* Linha decorativa diagonal */
-.hero-diagonal {
-  position: absolute;
-  top: 0; right: -100px;
-  width: 600px; height: 100%;
-  background: linear-gradient(135deg,
-    transparent 0%,
-    rgba(0,149,216,0.06) 40%,
-    rgba(166,206,55,0.05) 70%,
-    transparent 100%);
-  transform: skewX(-8deg);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Círculos decorativos */
-.hero-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(0,149,216,0.12);
-  pointer-events: none;
-  z-index: 1;
-  animation: ringPulse 6s ease-in-out infinite;
-}
-.hero-ring-1 { width: 500px; height: 500px; right: -100px; top: 50%; transform: translateY(-50%); animation-delay: 0s; }
-.hero-ring-2 { width: 700px; height: 700px; right: -200px; top: 50%; transform: translateY(-50%); animation-delay: 1s; border-color: rgba(166,206,55,0.08); }
-.hero-ring-3 { width: 900px; height: 900px; right: -300px; top: 50%; transform: translateY(-50%); animation-delay: 2s; }
-@keyframes ringPulse {
-  0%,100% { opacity: 1; transform: translateY(-50%) scale(1); }
-  50%      { opacity: 0.5; transform: translateY(-50%) scale(1.03); }
-}
-
-/* Layout interno */
 .hero-inner {
   max-width: 1200px; margin: 0 auto; padding: 60px 28px 80px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 60px;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-  width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
 }
-
-/* ── LADO ESQUERDO ── */
-.hero-left { display: flex; flex-direction: column; }
-
-/* Badge animado */
 .hero-tag {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(166,206,55,.15);
-  border: 1px solid rgba(166,206,55,.35);
-  padding: 7px 16px; border-radius: 100px;
-  font-size: 12px; font-weight: 700; color: #4a7a00; letter-spacing: .8px;
-  margin-bottom: 30px; width: fit-content;
-  opacity: 0; animation: herorise .6s .1s forwards;
-  box-shadow: 0 4px 20px rgba(166,206,55,.15);
+  background: rgba(166,206,55,.12); border: 1px solid rgba(166,206,55,.3);
+  padding: 6px 14px; border-radius: 100px;
+  font-size: 12px; font-weight: 600; color: #5a8a00; letter-spacing: .5px;
+  margin-bottom: 28px; opacity: 0; animation: herorise .6s .1s forwards;
 }
-.hero-tag::before {
-  content:''; width:7px; height:7px; border-radius:50%;
-  background:var(--green); flex-shrink:0;
-  animation: pulse 2s infinite;
-  box-shadow: 0 0 8px rgba(166,206,55,.8);
-}
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.3)} }
+.hero-tag::before { content:''; width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
 
-/* Título com efeito de linha */
 .hero h1 {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(42px, 5.5vw, 72px);
-  line-height: 1.02;
-  letter-spacing: -.5px;
-  margin-bottom: 10px;
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 1.05; letter-spacing: -.5px;
+  margin-bottom: 24px;
   opacity: 0; animation: herorise .7s .2s forwards;
 }
-
-.hero h1 .line-wrap {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 10px; /* Adicione esta linha */
-  margin-bottom: -10px; /* Adicione esta linha para compensar o espaço extra */
-}
-
-.hero h1 .line-1 { color: var(--dark); }
-.hero h1 .line-2 {
-  font-style: italic;
-  color: transparent;
-  -webkit-text-stroke: 2px var(--blue);
-  display: block;
-  position: relative;
-}
-.hero h1 .line-2::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0; top: 0;
-  color: var(--blue);
-  clip-path: inset(0 100% 0 0);
-  animation: textReveal 1.2s .8s cubic-bezier(.77,0,.18,1) forwards;
-  -webkit-text-stroke: 0;
-}
-@keyframes textReveal {
-  to { clip-path: inset(0 0% 0 0); }
-}
-
-/* Subtítulo decorado */
-.hero-desc-wrap {
-  margin-bottom: 40px; margin-top: 20px;
-  opacity: 0; animation: herorise .7s .4s forwards;
-  position: relative; padding-left: 20px;
-}
-.hero-desc-wrap::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 4px; bottom: 4px;
-  width: 3px;
-  background: linear-gradient(to bottom, var(--blue), var(--green));
-  border-radius: 3px;
+.hero h1 em {
+  font-style: italic; color: var(--blue);
+  -webkit-text-stroke: 0px; display:block;
 }
 .hero-desc {
-  font-size: 15.5px; color: var(--muted); line-height: 1.8;
-  max-width: 480px;
+  font-size: 16px; color: var(--muted); line-height: 1.75;
+  max-width: 460px; margin-bottom: 44px;
+  opacity: 0; animation: herorise .7s .35s forwards;
 }
-
-/* Botões premium */
 .hero-actions {
   display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
-  opacity: 0; animation: herorise .7s .55s forwards;
-  margin-bottom: 44px;
+  opacity: 0; animation: herorise .7s .5s forwards;
 }
 .btn-primary {
   display: inline-flex; align-items: center; gap: 10px;
   background: var(--blue); color: #fff;
-  padding: 16px 32px; border-radius: 100px;
-  font-size: 14px; font-weight: 700; letter-spacing: .3px;
-  box-shadow: 0 8px 30px rgba(0,149,216,.35), 0 0 0 0 rgba(0,149,216,.3);
+  padding: 15px 30px; border-radius: 100px;
+  font-size: 14px; font-weight: 600; letter-spacing: .3px;
+  box-shadow: 0 8px 30px rgba(0,149,216,.35);
   transition: all .3s;
-  position: relative;
-  overflow: hidden;
 }
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
-  opacity: 0;
-  transition: opacity .3s;
-}
-.btn-primary:hover::before { opacity: 1; }
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 50px rgba(0,149,216,.5);
-}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(0,149,216,.45); }
 .btn-outline {
   display: inline-flex; align-items: center; gap: 8px;
-  border: 2px solid rgba(0,149,216,.3); color: var(--dark);
-  padding: 14px 26px; border-radius: 100px;
-  font-size: 14px; font-weight: 600; transition: all .3s;
-  background: rgba(255,255,255,.5);
-  backdrop-filter: blur(8px);
+  border: 1.5px solid var(--border); color: var(--dark);
+  padding: 14px 24px; border-radius: 100px;
+  font-size: 14px; font-weight: 500; transition: all .25s;
 }
-.btn-outline:hover {
-  border-color: var(--blue); color: var(--blue);
-  background: rgba(0,149,216,.06);
-  transform: translateY(-2px);
-}
-.btn-outline .arr { transition: transform .3s; }
-.btn-outline:hover .arr { transform: translateX(5px); }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+.btn-outline .arr { transition: transform .25s; }
+.btn-outline:hover .arr { transform: translateX(3px); }
 
-/* Stats bar redesenhada */
-.hero-stats {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 0;
-  background: rgba(255,255,255,.7);
-  backdrop-filter: blur(16px);
-  border-radius: 20px; overflow: hidden;
-  border: 1px solid rgba(255,255,255,.9);
-  box-shadow: 0 8px 40px rgba(0,149,216,.1);
-  opacity: 0; animation: herorise .7s .7s forwards;
-}
-.hstat {
-  padding: 22px 20px; text-align: center;
-  position: relative;
-  transition: background .3s;
-}
-.hstat:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: 0; top: 20%; bottom: 20%;
-  width: 1px;
-  background: rgba(0,149,216,.15);
-}
-.hstat:hover { background: rgba(0,149,216,.04); }
-.hstat-n {
-  font-size: 30px; font-weight: 900; color: var(--blue); line-height: 1;
-  background: linear-gradient(135deg, var(--blue), #00b4d8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hstat-l { font-size: 11px; color: var(--muted); margin-top: 5px; font-weight: 600; letter-spacing: .5px; }
-
-@keyframes herorise { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-
-/* ── LADO DIREITO — IMAGEM PREMIUM ── */
 .hero-right {
   position: relative;
-  opacity: 0;
-  animation: heroright .9s .35s forwards;
-  padding: 30px;
+  opacity: 0; animation: heroright .9s .3s forwards;
 }
-@keyframes heroright { from{opacity:0;transform:translateX(40px) scale(.97)} to{opacity:1;transform:translateX(0) scale(1)} }
-
-/* Anel decorativo atrás da imagem */
-.hero-img-ring {
-  position: absolute;
-  inset: -10px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, rgba(0,149,216,.15), rgba(166,206,55,.12));
-  animation: ringGlow 4s ease-in-out infinite alternate;
-  z-index: 0;
-}
-@keyframes ringGlow {
-  0%   { opacity: 0.6; transform: scale(1); }
-  100% { opacity: 1;   transform: scale(1.02); }
-}
-
-.hero-img-wrap {
+@keyframes heroright { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+/* Procure por .hero-right no seu CSS e adicione um padding para os cards não sumirem */
+.hero-right {
   position: relative;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow:
-    0 40px 80px rgba(0,149,216,.2),
-    0 0 0 1px rgba(255,255,255,.8),
-    inset 0 0 0 1px rgba(0,149,216,.1);
+  opacity: 0; 
+  animation: heroright .9s .3s forwards;
+  padding: 20px; /* Adiciona espaço para as caixinhas flutuarem sem cortar */
+}
+
+/* Garante que o wrap da imagem continue com o efeito de zoom, mas sem influenciar os cards */
+.hero-img-wrap {
+  position: relative; 
+  border-radius: 24px; 
+  overflow: hidden; /* O corte agora só afeta a imagem interna */
+  box-shadow: 0 40px 80px rgba(0,149,216,.15), 0 0 0 1px var(--border);
   aspect-ratio: 4/3;
   z-index: 1;
+}
+
+/* Ajuste fino da posição dos cards para garantir que fiquem sobre a imagem */
+.hero-float-card {
+  z-index: 2; /* Fica acima da imagem */
+}
+
+.hero-float-cert {
+  z-index: 2; /* Fica acima da imagem */
+}
+.hero-img-wrap {
+  position: relative; border-radius: 24px; overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,149,216,.15), 0 0 0 1px var(--border);
+  aspect-ratio: 4/3;
 }
 .hero-img-wrap img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 8s ease;
-  filter: saturate(1.1) brightness(1.02);
 }
 .hero-img-wrap:hover img { transform: scale(1.04); }
-
-/* Overlay gradiente moderno */
 .hero-img-wrap::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to top, rgba(10,22,40,.5) 0%, transparent 40%),
-    linear-gradient(135deg, rgba(0,149,216,.15) 0%, transparent 50%);
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(0,149,216,.1) 0%, transparent 60%);
   pointer-events: none;
-  z-index: 2;
 }
 
-/* Badge inferior da imagem */
-.hero-img-badge {
-  position: absolute;
-  bottom: 20px; left: 20px; right: 20px;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255,255,255,.12);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: 14px;
-  padding: 12px 16px;
-}
-.hero-img-badge-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 12px rgba(166,206,55,.8);
-  flex-shrink: 0;
-  animation: pulse 2s infinite;
-}
-.hero-img-badge-text {
-  font-size: 12px; font-weight: 700; color: #fff;
-  letter-spacing: .5px;
-}
-.hero-img-badge-sub {
-  font-size: 10px; color: rgba(255,255,255,.65); margin-top: 1px;
-}
-
-/* Cards flutuantes premium */
 .hero-float-card {
-  position: absolute;
-  bottom: -10px; left: -10px;
-  background: #fff;
-  border-radius: 18px;
+  position: absolute; bottom: -20px; left: -24px;
+  background: #fff; border-radius: 16px;
   padding: 18px 22px;
-  box-shadow:
-    0 24px 60px rgba(0,0,0,.15),
-    0 0 0 1px rgba(0,149,216,.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,.12), 0 0 0 1px var(--border);
   animation: floatcard 4s ease-in-out infinite;
-  min-width: 170px;
-  z-index: 4;
-  backdrop-filter: blur(10px);
+  min-width: 180px;
 }
-@keyframes floatcard { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-10px) rotate(0deg)} }
+@keyframes floatcard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.float-label { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: .5px; margin-bottom: 4px; }
+.float-num { font-size: 28px; font-weight: 800; color: var(--blue); line-height: 1; }
+.float-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-.float-label {
-  font-size: 10px; color: var(--muted); font-weight: 700;
-  letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;
-}
-.float-num {
-  font-size: 32px; font-weight: 900; line-height: 1;
-  background: linear-gradient(135deg, var(--blue), #00b4d8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.float-sub { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 500; }
-
-/* Chip MAPA no canto */
 .hero-float-cert {
-  position: absolute;
-  top: -10px; right: -10px;
-  background: linear-gradient(135deg, var(--green), #8db82a);
-  border-radius: 16px;
-  padding: 14px 20px;
-  box-shadow: 0 16px 40px rgba(166,206,55,.4), 0 0 0 3px rgba(166,206,55,.2);
+  position: absolute; top: -16px; right: -16px;
+  background: var(--green); border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 16px 40px rgba(166,206,55,.35);
   animation: floatcard 4s ease-in-out infinite 2s;
-  z-index: 4;
 }
-.cert-icon { font-size: 24px; margin-bottom: 4px; }
-.cert-label {
-  font-size: 11px; font-weight: 800; color: #2d5000;
-  letter-spacing: .8px; text-transform: uppercase;
-}
+.cert-icon { font-size: 22px; margin-bottom: 4px; }
+.cert-label { font-size: 11px; font-weight: 700; color: #2d5000; letter-spacing: .5px; }
 
-/* Chip lateral de anos */
-.hero-float-years {
-  position: absolute;
-  top: 50%; right: -18px;
-  transform: translateY(-50%);
-  background: var(--dark);
-  border-radius: 16px;
-  padding: 20px 16px;
-  box-shadow: 0 20px 50px rgba(0,0,0,.25);
-  animation: floatcard 5s ease-in-out infinite 1s;
-  z-index: 4;
-  text-align: center;
-  min-width: 80px;
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: var(--border); border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border); margin-top: 44px;
+  opacity: 0; animation: herorise .7s .65s forwards;
 }
-.years-num {
-  font-size: 28px; font-weight: 900; color: var(--green); line-height: 1;
-  display: block;
+.hstat {
+  background: var(--bg); padding: 22px 20px; text-align: center;
 }
-.years-label {
-  font-size: 9px; font-weight: 700; color: rgba(255,255,255,.5);
-  letter-spacing: 1px; text-transform: uppercase;
-  margin-top: 4px; display: block; line-height: 1.3;
-}
+.hstat-n { font-size: 28px; font-weight: 800; color: var(--blue); line-height: 1; }
+.hstat-l { font-size: 12px; color: var(--muted); margin-top: 4px; font-weight: 500; }
 
-/* Scroll indicator */
-.hero-scroll {
-  position: absolute;
-  bottom: 30px; left: 50%; transform: translateX(-50%);
-  z-index: 3;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  opacity: 0; animation: herorise .7s 1.2s forwards;
-  cursor: pointer;
-}
-.hero-scroll-text {
-  font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  text-transform: uppercase; color: rgba(10,22,40,.4);
-}
-.hero-scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, rgba(0,149,216,.5), transparent);
-  animation: scrollLine 2s ease-in-out infinite;
-}
-@keyframes scrollLine {
-  0%   { transform: scaleY(0); transform-origin: top; }
-  50%  { transform: scaleY(1); transform-origin: top; }
-  51%  { transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
-/* ── RESPONSIVE HERO ── */
-@media(max-width:1024px) {
-  .hero-inner {
-    grid-template-columns: 1fr;
-    gap: 50px;
-    padding: 40px 28px 60px;
-  }
-  .hero-right { display: none; }
-  .hero-stats { margin-top: 0; }
-  .hero-scroll { display: none; }
-}
-@media(max-width:768px) {
-  body { padding-top: 110px; }
-  .nav-logo { height: 70px !important; }
-  .nav-links { display: none; }
-  .hero h1 { font-size: clamp(36px, 9vw, 54px); }
-  .hero-desc { font-size: 14px; }
-}
-@media(max-width:640px) {
-  .hero-stats { grid-template-columns: 1fr; }
-  .hstat:not(:last-child)::after { display: none; }
-}
+@keyframes herorise { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
 /* ── MARQUEE ── */
 .marquee {
@@ -627,41 +300,6 @@ body { padding-top: 160px; }
 }
 .mtrack { display: inline-block; animation: mq 40s linear infinite; white-space: nowrap; }
 .mtrack span { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.5); margin: 0 20px; }
-.mtrack span {
-  color: #0a1628 !important;
-  opacity: 0.7;
-}
-.strip-n {
-  color: #0a1628 !important;
-}
-.strip-l {
-  color: #4a5568 !important;
-}
-.about-section {
-  background: transparent !important;
-  color: #0a1628 !important;
-}
-.ht-list li {
-  color: #0a1628 !important;
-}
-.ht-text-col .sec-h {
-  color: #0a1628 !important;
-}
-.about-text {
-  color: #4a5568 !important;
-}
-.cert-badge {
-  background: rgba(0, 149, 216, 0.1) !important;
-  color: #0a1628 !important;
-  border: 1px solid var(--blue) !important;
-}
-.team-c {
-  background: #ffffff !important;
-  border: 1px solid var(--border) !important;
-}
-.team-r {
-  color: #4a5568 !important;
-}
 .mtrack .dot { color: var(--green); margin: 0 4px; }
 @keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
@@ -689,9 +327,7 @@ body { padding-top: 160px; }
   margin-bottom: 56px; gap: 40px; flex-wrap: wrap;
 }
 .svc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
 }
 .svc-card {
   background: #fff; border-radius: 20px;
@@ -797,7 +433,7 @@ body { padding-top: 160px; }
 .about-badge-l { font-size: 10px; font-weight: 700; color: #2d5000; letter-spacing: .5px; text-align: center; }
 .about-section .sec-label { color: var(--green); }
 .about-section .sec-label::after { background: var(--green); }
-.about-section .sec-h { color: #000; }
+.about-section .sec-h { color: #fff; }
 .about-section .sec-h em { color: var(--blue); }
 .about-text { font-size: 15px; color: rgba(255,255,255,.6); line-height: 1.8; margin: 24px 0 32px; }
 .certs-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 36px; }
@@ -851,34 +487,30 @@ body { padding-top: 160px; }
 
 /* FORM */
 .c-form {
-  background: #ffffff !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 24px; padding: 44px 40px;
+  background: var(--dark); border-radius: 24px; padding: 44px 40px;
   position: relative; overflow: hidden;
 }
 .c-form::before {
   content: ''; position: absolute; top: -100px; right: -100px;
   width: 300px; height: 300px; border-radius: 50%;
-  background: var(--blue); opacity: .05; filter: blur(60px);
+  background: var(--blue); opacity: .1; filter: blur(60px);
 }
 .c-form h3 {
   font-family: 'DM Serif Display', serif; font-size: 30px;
-  color: #0a1628 !important; margin-bottom: 6px;
+  color: #fff; margin-bottom: 6px;
 }
-.c-form > p { font-size: 14px; color: #4a5568 !important; margin-bottom: 32px; }
+.c-form > p { font-size: 14px; color: rgba(255,255,255,.45); margin-bottom: 32px; }
 .fg { margin-bottom: 16px; }
-.fg label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4a5568 !important; margin-bottom: 8px; }
+.fg label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 8px; }
 .fg input, .fg select, .fg textarea {
   width: 100%; padding: 14px 18px;
-  background: #f0f8ff !important;
-  color: #0a1628 !important;
-  border: 1px solid #d1e9ff !important;
-  font-family: 'Outfit', sans-serif; font-size: 14px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  color: #fff; font-family: 'Outfit', sans-serif; font-size: 14px;
   border-radius: 12px; outline: none; transition: border-color .2s;
 }
-.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--blue) !important; background: rgba(0,149,216,.06) !important; }
-.fg input::placeholder, .fg textarea::placeholder { color: #a0aec0 !important; }
-.fg select option { background: #fff; }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--blue); background: rgba(0,149,216,.1); }
+.fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,.25); }
+.fg select option { background: var(--dark); }
 .fg textarea { resize: vertical; min-height: 80px; }
 .f-submit {
   width: 100%; padding: 16px;
@@ -894,20 +526,19 @@ body { padding-top: 160px; }
 
 /* ── FOOTER ── */
 footer {
-  background: #ffffff !important;
-  border-top: 1px solid var(--border) !important;
+  background: var(--dark); border-top: 1px solid rgba(255,255,255,.06);
   padding: 60px 0 32px;
 }
 .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 48px; }
-.footer-desc { font-size: 14px; color: #4a5568 !important; line-height: 1.8; margin-top: 20px; max-width: 280px; }
-.fc h5 { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green) !important; margin-bottom: 20px; }
+.footer-desc { font-size: 14px; color: rgba(255,255,255,.45); line-height: 1.8; margin-top: 20px; max-width: 280px; }
+.fc h5 { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 20px; }
 .fc ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.fc a { font-size: 13px; color: #4a5568 !important; transition: color .2s; }
-.fc a:hover { color: var(--blue) !important; }
+.fc a { font-size: 13px; color: rgba(255,255,255,.45); transition: color .2s; }
+.fc a:hover { color: #fff; }
 .footer-bot {
-  border-top: 1px solid var(--border); padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,.06); padding-top: 28px;
   display: flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: #4a5568 !important; flex-wrap: wrap; gap: 8px;
+  font-size: 12px; color: rgba(255,255,255,.25); flex-wrap: wrap; gap: 8px;
 }
 .footer-logo-txt {
   font-family: 'DM Serif Display', serif;
@@ -934,13 +565,18 @@ footer {
 .reveal-right { opacity: 0; transform: translateX(30px); transition: opacity .7s ease, transform .7s ease; }
 .reveal-right.on { opacity: 1; transform: translateX(0); }
 
-/* ── RESPONSIVE GERAL ── */
+/* ── RESPONSIVE ── */
 @media(max-width:1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 50px; padding: 50px 28px 60px; }
+  .hero-right { display: none; }
+  .hero-stats { margin-top: 36px; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
   .about-inner { grid-template-columns: 1fr; gap: 48px; }
   .about-badge { display: none; }
   .why-grid { grid-template-columns: 1fr 1fr; }
   .contact-inner { grid-template-columns: 1fr; gap: 48px; }
   .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+  .nav-links { display: none; }
   .burger { display: flex; }
   .ba-grid { grid-template-columns: 1fr; }
   .extras-grid { grid-template-columns: 1fr; }
@@ -950,13 +586,13 @@ footer {
   .section { padding: 70px 0; }
   .svc-grid { grid-template-columns: 1fr; }
   .why-grid { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: 1fr; }
   .c-form { padding: 32px 24px; }
   .fg-row { grid-template-columns: 1fr; }
   .strip-inner { grid-template-columns: 1fr 1fr; }
   .team-row { grid-template-columns: 1fr; }
 }
-
-/* ── TABS STYLES ── */
+  /* ── TABS STYLES ── */
 .tabs-container {
   background: #fff;
   border-radius: 24px;
@@ -964,14 +600,16 @@ footer {
   overflow: hidden;
   box-shadow: 0 10px 40px rgba(0,149,216,.05);
 }
+
 .tabs-nav {
   display: flex;
   background: var(--light);
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
-  scrollbar-width: none;
+  scrollbar-width: none; /* Firefox */
 }
-.tabs-nav::-webkit-scrollbar { display: none; }
+.tabs-nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
 .tab-btn {
   padding: 20px 28px;
   border: none;
@@ -985,39 +623,48 @@ footer {
   transition: all .3s;
   position: relative;
 }
+
 .tab-btn:hover { color: var(--blue); }
+
 .tab-btn.active {
   color: var(--blue);
   background: #fff;
 }
+
 .tab-btn.active::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 3px; background: var(--blue);
 }
+
 .tabs-content { padding: 44px; }
+
 .tab-pane {
   display: none;
   animation: fadeIn .5s ease;
 }
 .tab-pane.active { display: block; }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 .tab-pane h3 {
   font-family: 'DM Serif Display', serif;
   font-size: 28px;
   margin-bottom: 20px;
   color: var(--dark);
 }
+
 .tab-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 40px;
   align-items: center;
 }
+
 .team-mini-row {
   margin-top: 25px;
   display: flex;
@@ -1031,6 +678,7 @@ footer {
   font-size: 13px;
 }
 .team-mini-row span strong { color: var(--blue); }
+
 .tab-info-card {
   background: var(--light);
   padding: 30px;
@@ -1042,6 +690,7 @@ footer {
   font-size: 14px;
   color: var(--dark);
 }
+
 .mv-box {
   padding: 30px;
   background: var(--light);
@@ -1049,12 +698,13 @@ footer {
   text-align: center;
 }
 .mv-ico { font-size: 40px; margin-bottom: 15px; }
-.mv-box h4 {
-  font-family: 'DM Serif Display', serif;
-  font-size: 22px;
-  color: var(--blue);
-  margin-bottom: 10px;
+.mv-box h4 { 
+  font-family: 'DM Serif Display', serif; 
+  font-size: 22px; 
+  color: var(--blue); 
+  margin-bottom: 10px; 
 }
+
 .values-list { list-style: none; }
 .values-list li {
   margin-bottom: 15px;
@@ -1068,6 +718,7 @@ footer {
   left: 0; color: var(--green);
   font-weight: bold;
 }
+
 .services-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1081,6 +732,7 @@ footer {
   font-size: 13px;
   font-weight: 500;
 }
+
 .brands-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1099,22 +751,203 @@ footer {
   color: #fff;
   border-color: var(--blue);
 }
+
 @media (max-width: 768px) {
   .tab-grid { grid-template-columns: 1fr; }
   .tabs-content { padding: 30px 20px; }
 }
+/* ── ESTILOS TRATAMENTO HT ── */
+.ht-section { 
+  background: var(--bg); /* Se você mudou para azul escuro, ele seguirá a cor */
+}
 
-/* ── TRATAMENTO HT ── */
+.ht-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.ht-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.ht-img-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.ht-img-card img {
+  width: 100%;
+  aspect-ratio: 3/4; /* Deixa as fotos em formato vertical elegante */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s;
+}
+
+.ht-img-card:hover img {
+  transform: scale(1.08);
+}
+
+.ht-img-card span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: #fff;
+  padding: 20px 15px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Ajuste para telas menores (Celular) */
+@media(max-width: 1024px) {
+  .ht-layout { grid-template-columns: 1fr; gap: 40px; }
+  .ht-gallery { grid-template-columns: 1fr 1fr; }
+}
+
+@media(max-width: 640px) {
+  .ht-gallery { grid-template-columns: 1fr; }
+}
+/* ── AJUSTE PARA IMAGENS MAIORES E SEM CORTES ── */
+.ht-layout {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr; /* Dá mais espaço para as fotos (lado direito) do que para o texto */
+  gap: 40px;
+  align-items: center;
+}
+
+.ht-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mantém as duas lado a lado */
+  gap: 15px;
+}
+
+.ht-img-card {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--blue-card); /* Fundo caso a imagem seja menor */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.ht-img-card img {
+  width: 100%;
+  height: auto; /* Deixa a altura livre para não cortar a foto */
+  display: block;
+  object-fit: contain; /* Garante que a foto inteira apareça no quadro */
+  transition: transform 0.5s;
+}
+
+.ht-img-card:hover img {
+  transform: scale(1.03); /* Zoom mais sutil para não perder as bordas */
+}
+
+/* Ajuste para celular */
+@media(max-width: 1024px) {
+  .ht-layout { 
+    grid-template-columns: 1fr; /* No celular, texto em cima e imagem embaixo */
+  }
+  .ht-gallery {
+    grid-template-columns: 1fr; /* No celular, uma imagem sob a outra para ficarem gigantes */
+  }
+}
+/* ── ESTILOS TRATAMENTO HT (IMAGENS GRANDES E FAIXA BRANCA) ── */
+.ht-section { 
+  background: var(--bg); 
+  padding: 80px 0;
+}
+
+.ht-layout {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr; /* Aumenta o espaço das fotos */
+  gap: 50px;
+  align-items: center;
+}
+
+.ht-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.ht-img-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #fff; /* Fundo para garantir que a foto apareça bem */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.ht-img-card img {
+  width: 100%;
+  height: auto; /* Mantém a proporção original, sem cortar */
+  display: block;
+  object-fit: contain; 
+}
+
+/* Faixa da Legenda */
+.ht-caption-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 12px 15px;
+  background: rgba(0, 0, 0, 0.7); /* Legenda escura para a 1ª foto */
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* FAIXA BRANCA ESPECÍFICA (Segunda Foto) */
+.ht-caption-overlay.white-strip {
+  background: #ffffff; /* Faixa branca solicitada */
+  color: var(--blue);  /* Texto em azul */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-top: 2px solid var(--blue);
+}
+
+.mini-logo-caption {
+  height: 30px !important; /* Tamanho da logo na faixa */
+  width: auto !important;
+}
+
+.caption-text {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #0a1628; /* Texto escuro para ler bem no branco */
+}
+
+/* Ajustes para Celular */
+@media(max-width: 1024px) {
+  .ht-layout { grid-template-columns: 1fr; }
+  .ht-gallery { grid-template-columns: 1fr; } /* Fotos uma abaixo da outra para ficarem gigantes */
+  .ht-img-card img { max-height: 500px; }
+}
+/* ── ESTILOS HT PREMIUM ── */
 .ht-section {
   background: var(--bg);
   padding: 100px 0;
 }
+
 .ht-layout {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 60px;
   align-items: center;
 }
+
+/* Badge e Listas */
 .ht-badge {
   display: inline-block;
   background: var(--green-light);
@@ -1126,70 +959,137 @@ footer {
   margin-bottom: 20px;
   border: 1px solid rgba(166,206,55,0.2);
 }
+
 .ht-list {
   list-style: none;
   margin: 25px 0;
 }
+
 .ht-list li {
   display: flex; align-items: center; gap: 10px;
-  margin-bottom: 12px; font-weight: 600; color: #344054 !important;
+  margin-bottom: 12px; font-weight: 600; color: #fff;
 }
-.ht-list li span { color: #a6ce37 !important; font-weight: 900; }
-.ht-visual-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
+
+.ht-list li span { color: var(--green); font-weight: 900; }
+
+/* Tratamento das Fotos */
+.ht-visual-col {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  height: 550px;
 }
-.ht-photo-box {
-  flex: 1;
+
+.ht-frame {
   position: relative;
-  border-radius: 15px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-  border: 2px solid #fff;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  background: #000;
 }
-.ht-photo-box img {
+
+.ht-photo {
   width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  /* TRATAMENTO DA IMAGEM: Aumenta contraste, brilho e nitidez */
+  filter: brightness(1.1) contrast(1.1) saturate(1.2);
+  transition: all 0.6s ease;
 }
-.ht-center-logo {
-  width: 120px;
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
+
+.ht-frame:hover .ht-photo {
+  filter: brightness(1.2) contrast(1.15) saturate(1.3);
+  transform: scale(1.05);
 }
-.ht-center-logo img {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 5px 15px rgba(0,149,216,0.2));
+
+/* Posicionamento das fotos (Assimetria Moderna) */
+.frame-1 {
+  grid-column: 1 / 8;
+  grid-row: 1 / 8;
+  z-index: 1;
 }
-.photo-label {
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Isso ajusta o número de colunas sozinho */
+  gap: 20px;
+}
+
+.frame-2 {
+  grid-column: 4 / 11;
+  grid-row: 4 / 11;
+  z-index: 2;
+  border: 4px solid var(--bg); /* Cria um recorte visual entre as fotos */
+}
+
+/* Faixas e Legendas */
+.ht-tag {
+  position: absolute; top: 20px; right: 20px;
+  background: rgba(0, 149, 216, 0.8);
+  color: #fff; padding: 5px 12px;
+  border-radius: 100px; font-size: 10px;
+  font-weight: 700; text-transform: uppercase;
+}
+
+/* FAIXA BRANCA COM LOGO (Solicitada) */
+.white-brand-strip {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--blue);
-  padding: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  text-align: center;
+  background: #ffffff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.strip-logo {
+  height: 35px;
+  width: auto;
+}
+
+.strip-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.strip-text strong {
+  color: #0a1628;
+  font-size: 13px;
   text-transform: uppercase;
 }
-.ht-text-full {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 50px;
+
+.strip-text span {
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 600;
 }
+
+/* Ajustes Responsivos */
 @media(max-width: 1024px) {
   .ht-layout { grid-template-columns: 1fr; }
+  .ht-visual-col { height: 450px; }
 }
-@media(max-width: 768px) {
-  .ht-visual-row { flex-direction: column; }
-  .ht-center-logo { order: -1; width: 80px; margin-bottom: 20px; }
-  .ht-photo-box { width: 100%; }
+
+@media(max-width: 640px) {
+  .ht-visual-col { height: 400px; }
+  .frame-1 { grid-column: 1 / 11; grid-row: 1 / 6; }
+  .frame-2 { grid-column: 1 / 11; grid-row: 6 / 11; border: none; }
+}
+/* Correção para o texto da lista HT */
+.ht-list li {
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+  margin-bottom: 12px; 
+  font-weight: 600; 
+  color: #344054 !important; /* Cor cinza escura para aparecer no fundo claro */
+}
+
+.ht-list li span { 
+  color: #a6ce37 !important; /* Cor verde para o ícone ✓ */
+  font-weight: 900; 
 }
 </style>
 </head>
@@ -1208,12 +1108,13 @@ footer {
 <!-- NAV -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <img src="somente-logotipo.png" alt="Insetos & Cia" class="nav-logo">
+    <img src="somente-logotipo.png" alt="Insetos & Cia" class="nav-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="nav-logo-fallback" style="display:none">Insetos <span style="color:var(--green)">&</span> Cia</div>
     <ul class="nav-links">
       <li><a href="#servicos">Serviços</a></li>
-      <li><a href="#tratamento-ht">Tratamento HT</a></li>
+      <li><a href="#resultados">Resultados</a></li>
       <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#contato">Contato</a></li>
+      <li><a href="#contato" class="nav-btn">Orçamento</a></li>
     </ul>
     <button class="burger" id="burger" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1224,113 +1125,54 @@ footer {
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mmenu">
   <a href="#servicos" onclick="closeMobile()">Serviços</a>
-  <a href="#tratamento-ht" onclick="closeMobile()">Tratamento HT</a>
+  <a href="#resultados" onclick="closeMobile()">Resultados</a>
   <a href="#sobre" onclick="closeMobile()">Sobre</a>
   <a href="#contato" class="m-btn" onclick="closeMobile()">Solicitar Orçamento →</a>
 </div>
 
-<!-- ════════════════════════════════════════
-     HERO — PREMIUM
-════════════════════════════════════════ -->
+<!-- HERO -->
 <section class="hero">
-  <!-- Backgrounds especiais -->
-  <div class="hero-bg"></div>
-  <div class="hero-particles">
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-  </div>
-  <div class="hero-diagonal"></div>
-  <div class="hero-ring hero-ring-1"></div>
-  <div class="hero-ring hero-ring-2"></div>
-  <div class="hero-ring hero-ring-3"></div>
-
   <div class="hero-inner">
-    <!-- ESQUERDA -->
     <div class="hero-left">
-      <div class="hero-tag">Fundada 2013 &nbsp;·&nbsp; Reg. MAPA &nbsp;·&nbsp; Lic. Ambiental</div>
-
-      <h1>
-        <span class="line-wrap line-1">Proteção Total</span>
-        <span class="line-wrap line-2" data-text="Contra Pragas">Contra Pragas</span>
-      </h1>
-
-      <div class="hero-desc-wrap">
-        <p class="hero-desc">Soluções certificadas em desinsetização, desratização e controle de vetores. Alvará Sanitário Estadual. Há 13 anos prestando serviço com <strong>Qualidade e Confiança</strong>. Atendemos residências, comércios e indústrias em Aripuanã e região.</p>
-      </div>
-
-      <div class="hero-actions">
+      <div class="hero-tag">Fundada 2013 · Reg. MAPA · Lic. Ambiental</div>
+      <h1>Proteção Total<br><em>Contra Pragas</em></h1>
+      
+	  <p class="hero-desc">Soluções certificadas em desinsetização, desratização e controle de vetores. Alvará Sanitário Estadual. Há 13 anos prestando serviço com Qualidade e Confiança Atendemos residências, comércios e indústrias, em Aripuanã e região.</p>
+      
+	  <div class="hero-actions">
         <a href="https://wa.me/5566984296918" target="_blank" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           Falar no WhatsApp
         </a>
         <a href="#servicos" class="btn-outline">Ver serviços <span class="arr">→</span></a>
       </div>
-
-      <div class="hero-stats">
-        <div class="hstat">
-          <div class="hstat-n">+10</div>
-          <div class="hstat-l">Anos de mercado</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-n">3</div>
-          <div class="hstat-l">Certif. regulatórias</div>
-        </div>
-        <div class="hstat">
-          <div class="hstat-n">06</div>
-          <div class="hstat-l">Profissionais</div>
-        </div>
-      </div>
+      
+  <div class="hero-stats">
+  <div class="hstat"><div class="hstat-n">+10</div><div class="hstat-l">Anos de mercado</div></div>
+  <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Certif. regulatórias</div></div>
+  <div class="hstat"><div class="hstat-n">06</div><div class="hstat-l">Profissionais</div></div> <!-- Alterado aqui -->
+</div>
+      
     </div>
-
-    <!-- DIREITA — IMAGEM PREMIUM -->
-    <div class="hero-right">
-      <div class="hero-img-ring"></div>
-
-      <div class="hero-img-wrap">
-        <img src="desinsetizacao2.jpeg" alt="Controle profissional de pragas">
-
-        <!-- Badge dentro da imagem 
-        <div class="hero-img-badge">
-          <div class="hero-img-badge-dot"></div>
-          <div>
-            <div class="hero-img-badge-text">Serviço Ativo em Aripuanã</div>
-            <div class="hero-img-badge-sub">Atendimento rápido pelo WhatsApp</div>
-          </div>
-        </div>-->
-      </div>
-
-      <!-- Card flutuante inferior esquerdo -->
-      <div class="hero-float-card">
-        <div class="float-label">Fundada em</div>
-        <div class="float-num">2013</div>
-        <div class="float-sub">Aripuanã — MT</div>
-      </div>
-
-      <!-- Chip MAPA superior direito -->
-      <div class="hero-float-cert">
-        <div class="cert-icon">✓</div>
-        <div class="cert-label">Reg. MAPA</div>
-      </div>
-
-      <!-- Anos de experiência lateral -->
-      <div class="hero-float-years">
-        <span class="years-num">13+</span>
-        <span class="years-label">anos de<br>exp.</span>
-      </div>
-    </div>
+    
+<div class="hero-right">
+  <!-- A div hero-img-wrap agora contém APENAS a imagem -->
+  <div class="hero-img-wrap">
+    <img src="desinsetizacao2.jpeg" alt="Controle profissional de pragas">
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="hero-scroll" onclick="document.getElementById('servicos').scrollIntoView({behavior:'smooth'})">
-    <span class="hero-scroll-text">Scroll</span>
-    <div class="hero-scroll-line"></div>
+  <!-- Os cards flutuantes agora ficam FORA do wrap, para não serem cortados -->
+  <div class="hero-float-card">
+    <div class="float-label">ATENDIMENTO</div>
+    <div class="float-num">2013</div>
+    <div class="float-sub">Fundada em Aripuanã</div>
   </div>
+  
+  <div class="hero-float-cert">
+    <div class="cert-icon">✓</div>
+    <div class="cert-label">REG. MAPA</div>
+  </div>
+</div>
 </section>
 
 <!-- MARQUEE -->
@@ -1448,6 +1290,7 @@ footer {
         <p>Aplicação direcionada em superfícies e pontos críticos com efeito residual prolongado contra pragas urbanas.</p>
       </div>
 
+<!-- Serviço 10: Armazéns -->
       <div class="svc-card reveal" style="transition-delay:.5s">
         <div class="svc-num">10</div>
         <div class="svc-ico">
@@ -1457,6 +1300,7 @@ footer {
         <p>Proteção técnica de grãos e estoques contra insetos e roedores em unidades armazenadoras e silos.</p>
       </div>
 
+      <!-- Serviço 11: Limpeza de Quintal -->
       <div class="svc-card reveal" style="transition-delay:.55s">
         <div class="svc-num">11</div>
         <div class="svc-ico">
@@ -1466,6 +1310,36 @@ footer {
         <p>Roçada, limpeza de quintais e lotes urbanos com remoção de materiais que favorecem a proliferação de pragas.</p>
       </div>
 
+      <!-- Serviço 12: Poda -->
+      <div class="svc-card reveal" style="transition-delay:.6s">
+        <div class="svc-num">12</div>
+        <div class="svc-ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 38V14M12 28c0-8 6-14 12-14s12 6 12 14v10H12V28z"/><path d="M18 14c0-4 3-6 6-6s6 2 6 6M8 38h32" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Poda de Árvores e Grama</h3>
+        <p>Manutenção completa de jardins e áreas verdes, incluindo poda estética e corretiva de árvores e gramados.</p>
+      </div>
+	  <!-- Serviço 10: Armazéns -->
+      <div class="svc-card reveal" style="transition-delay:.5s">
+        <div class="svc-num">10</div>
+        <div class="svc-ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14l20-8 20 8v24l-20 8-20-8V14z"/><path d="M24 6v34M4 14l20 8 20-8M12 30l4 2 4-2M28 30l4 2 4-2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Controle em Armazéns</h3>
+        <p>Proteção técnica de grãos e estoques contra insetos e roedores em unidades armazenadoras e silos.</p>
+      </div>
+
+      <!-- Serviço 11: Limpeza de Quintal -->
+      <div class="svc-card reveal" style="transition-delay:.55s">
+        <div class="svc-num">11</div>
+        <div class="svc-ico">
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 32l4-16h16l4 16H12z"/><path d="M8 32h32M24 32V42M16 12l8-8 8 8" stroke-linecap="round"/><circle cx="24" cy="22" r="3" fill="currentColor" opacity=".25" stroke="none"/></svg>
+        </div>
+        <h3>Limpeza de Lotes</h3>
+        <p>Roçada, limpeza de quintais e lotes urbanos com remoção de materiais que favorecem a proliferação de pragas.</p>
+      </div>
+
+      <!-- Serviço 12: Poda -->
       <div class="svc-card reveal" style="transition-delay:.6s">
         <div class="svc-num">12</div>
         <div class="svc-ico">
@@ -1481,43 +1355,84 @@ footer {
 <!-- STRIP -->
 <div class="strip">
   <div class="strip-inner">
+    <!-- Item 1 -->
     <div class="strip-stat reveal">
       <div class="strip-n">+10<span>anos</span></div>
       <div class="strip-l">No mercado</div>
     </div>
+    
+    <!-- Item 2 -->
     <div class="strip-stat reveal" style="transition-delay:.1s">
       <div class="strip-n">3<span>cert.</span></div>
       <div class="strip-l">Regulatórias</div>
     </div>
+    
+    <!-- Item 3 (Atualizado para 6) -->
     <div class="strip-stat reveal" style="transition-delay:.2s">
       <div class="strip-n">6<span>prof.</span></div>
       <div class="strip-l">Especializados</div>
     </div>
+    
+    <!-- Item 4 
+    <div class="strip-stat reveal" style="transition-delay:.3s">
+      <div class="strip-n">9<span>serv.</span></div>
+      <div class="strip-l">Disponíveis</div>
+    </div>
+	-->
+	
   </div>
 </div>
-
-<!-- TRATAMENTO HT -->
+  </div>
+</div>
+<!-- SEÇÃO TRATAMENTO HT FITOLOG - VERSÃO PREMIUM -->
 <section class="section ht-section" id="tratamento-ht">
   <div class="container">
     <div class="ht-layout">
-      <div class="ht-text-full reveal">
+      
+      <!-- Lado Esquerdo: Texto com selo de autoridade -->
+      <div class="ht-text-col reveal-left">
         <div class="ht-badge">Registro MAPA nº MT-00627-6</div>
         <span class="sec-label">Tecnologia Fitossanitária</span>
-        <h2 class="sec-h">Tratamento Térmico <em>HT — Fitolog</em></h2>
-        <p class="sec-sub">O sistema <strong>Fitolog</strong> utiliza ar quente forçado para eliminar pragas em embalagens de madeira, atendendo à norma internacional <strong>NIMF-15</strong>.</p>
+        <h2 class="sec-h">Tratamento Térmico <br><em>HT </em></h2>
+        
+        <div class="ht-description">
+          <p>Somos referência em <strong>Aripuanã</strong> e região, oferecendo conformidade total para o setor exportador.</p>
+          <ul class="ht-list">
+            <li><span>✓</span> Norma Internacional NIMF-15</li>
+            <li><span>✓</span> Processo 100% Ecológico (Sem Químicos)</li>
+            <li><span>✓</span> Certificação Fitossanitária Digital</li>
+          </ul>
+          <p class="sec-sub">O sistema <strong>Fitolog</strong> utiliza ar quente forçado para eliminar pragas em embalagens de madeira, garantindo segurança total para o seu patrimônio e para o meio ambiente.</p>
+        </div>
+
+     
       </div>
 
-      <div class="ht-visual-row reveal">
-        <div class="ht-photo-box">
-          <img src="fitolog1.jpg" alt="Equipamento HT">
-          <span class="photo-label">Unidade de Tratamento</span>
+      <!-- Lado Direito: Galeria com Tratamento Visual -->
+      <div class="ht-visual-col reveal-right">
+        
+        <!-- Primeira Foto: Equipamento -->
+        <div class="ht-frame frame-1">
+          <img src="fitolog1.jpg" alt="Equipamento HT" class="ht-photo">
+          <div class="ht-overlay">
+            <span class="ht-tag">Alta Tecnologia</span>
+          </div>
         </div>
-       
-        <div class="ht-photo-box">
-          <img src="fitolog2.jpg" alt="Unidade Móvel">
-          <span class="photo-label">Unidade Móvel</span>
+
+        <!-- Segunda Foto: Unidade Móvel (Com a faixa branca solicitada) -->
+        <div class="ht-frame frame-2">
+          <img src="fitolog2.jpg" alt="Unidade Móvel HT" class="ht-photo">
+          <div class="white-brand-strip">
+            <img src="somente-logotipo.png" alt="Logo Insetos & Cia" class="strip-logo">
+            <div class="strip-text">
+                <strong>Unidade Móvel</strong>
+                <span>Tratamento Térmico HT</span>
+            </div>
+          </div>
         </div>
+
       </div>
+
     </div>
   </div>
 </section>
@@ -1546,26 +1461,30 @@ footer {
           <span class="cert-badge">Registro MAPA</span>
           <span class="cert-badge">HT desde 2016</span>
         </div>
-        <div class="team-row">
-          <div class="team-c"><div class="team-n">1</div><div class="team-r">Eng. Agrônoma (R.T.)</div></div>
-          <div class="team-c"><div class="team-n">2</div><div class="team-r">Controladores de Campo</div></div>
-          <div class="team-c"><div class="team-n">3</div><div class="team-r">Equipe Administrativa</div></div>
-        </div>
+        
+<div class="team-row">
+  <div class="team-c"><div class="team-n">1</div><div class="team-r">Eng. Agrônoma (R.T.)</div></div>
+  <div class="team-c"><div class="team-n">2</div><div class="team-r">Controladores de Campo</div></div>
+  <div class="team-c"><div class="team-n">3</div><div class="team-r">Equipe Administrativa</div></div> <!-- Ajustado para somar 6 -->
+</div>
+        
       </div>
     </div>
   </div>
 </section>
-
-<!-- TABS -->
+<!-- INFO TABS SECTION -->
 <section class="section tabs-section" id="conheca">
   <div class="container">
     <div class="reveal" style="text-align:center; margin-bottom: 50px;">
       <span class="sec-label">Transparência e Solidez</span>
+      <!-- Logo no lugar do Título -->
       <div style="margin-top: 20px;">
         <img src="somente-logotipo.png" alt="Insetos & Cia" style="height: 100px; width: auto; object-fit: contain;">
       </div>
     </div>
+    
     <div class="tabs-container reveal">
+      <!-- Botões das Abas -->
       <div class="tabs-nav">
         <button class="tab-btn active" onclick="openTab(event, 'quem-somos')">Quem Somos</button>
         <button class="tab-btn" onclick="openTab(event, 'historia')">Nossa História</button>
@@ -1574,30 +1493,38 @@ footer {
         <button class="tab-btn" onclick="openTab(event, 'servicos-lista')">Nossos Serviços</button>
         <button class="tab-btn" onclick="openTab(event, 'produtos')">Produtos</button>
       </div>
+
+      <!-- Conteúdo das Abas -->
       <div class="tabs-content">
-        <div id="quem-somos" class="tab-pane active">
-          <div class="tab-grid">
-            <div class="tab-text">
-              <h3>Controle de Pragas com Especialistas</h3>
-              <p>Nosso trabalho é o controle de pragas urbanas, controle de vetores aéreos, sanitização e tratamento em paletes para exportação usados no setor madeireiro, frigoríficos, indústrias de transformadores elétricos, etc.</p>
-              <div class="team-mini-row">
-                <span><strong>01</strong> Responsável Técnica (Eng. Agrônoma)</span>
-                <span><strong>02</strong> Controladores de Campo</span>
-                <span><strong>01</strong> Gerente Administrativo (Resp. Legal)</span>
-                <span><strong>02</strong> Auxiliares de Escritório</span>
-              </div>
-            </div>
-            <div class="tab-info-card">
-              <div class="info-item"><strong>Equipe:</strong> 06 Colaboradores</div>
-              <div class="info-item"><strong>Responsável:</strong> Mariana (Eng. Agrônoma)</div>
-            </div>
-          </div>
-        </div>
+       <!-- Aba: Quem Somos -->
+<div id="quem-somos" class="tab-pane active">
+  <div class="tab-grid">
+    <div class="tab-text">
+      <h3>Controle de Pragas com Especialistas</h3>
+      <p>Nosso trabalho é o controle de pragas urbanas, controle de vetores aéreos, sanitização e tratamento em paletes para exportação usados no setor madeireiro, frigoríficos, indústrias de transformadores elétricos, etc.</p>
+      
+      <div class="team-mini-row">
+        <span><strong>01</strong> Responsável Técnica (Eng. Agrônoma)</span>
+        <span><strong>02</strong> Controladores de Campo</span>
+        <span><strong>01</strong> Gerente Administrativo (Resp. Legal)</span>
+        <span><strong>02</strong> Auxiliares de Escritório</span>
+      </div>
+    </div>
+    <div class="tab-info-card">
+      <div class="info-item"><strong>Equipe:</strong> 06 Colaboradores</div> <!-- Alterado aqui -->
+      <div class="info-item"><strong>Responsável:</strong> Mariana (Eng. Agrônoma)</div>
+    </div>
+  </div>
+</div>
+
+        <!-- Aba: História -->
         <div id="historia" class="tab-pane">
           <h3>Nossa Trajetória</h3>
           <p>Somos uma empresa de prestação de serviços que atua no ramo de desinsetização de ambientes industriais, comerciais e residenciais, criada em <strong>Julho de 2013</strong> no município de Aripuanã-MT.</p>
           <p>Possuímos Alvará Sanitário Estadual, licença ambiental e registro no MAPA. Em <strong>Agosto de 2016</strong>, expandimos nossas operações para realizar <strong>Tratamento Térmico HT</strong>, como franqueado FITOLOG, atendendo setores estratégicos da nossa economia regional.</p>
         </div>
+
+        <!-- Aba: Missão e Visão -->
         <div id="missao-visao" class="tab-pane">
           <div class="tab-grid">
             <div class="mv-box">
@@ -1612,6 +1539,8 @@ footer {
             </div>
           </div>
         </div>
+
+        <!-- Aba: Valores -->
         <div id="valores" class="tab-pane">
           <h3>Nossos Pilares</h3>
           <ul class="values-list">
@@ -1620,6 +1549,8 @@ footer {
             <li><strong>Confiança:</strong> Busca contínua pela excelência através de produtos de alta performance e transparência.</li>
           </ul>
         </div>
+
+        <!-- Aba: Serviços -->
         <div id="servicos-lista" class="tab-pane">
           <h3>Soluções Completas</h3>
           <div class="services-tags">
@@ -1629,6 +1560,8 @@ footer {
             <span>Sanitização</span><span>Tratamento Térmico HT</span>
           </div>
         </div>
+
+        <!-- Aba: Produtos -->
         <div id="produtos" class="tab-pane">
           <h3>Marcas de Confiança</h3>
           <p style="margin-bottom: 20px;">Buscamos a excelência utilizando apenas insumos das grandes marcas do mercado Nacional:</p>
@@ -1639,11 +1572,11 @@ footer {
             <div class="brand-tag">ChemoNE</div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 </section>
-
 <!-- WHY -->
 <section class="section why-section">
   <div class="container">
@@ -1693,7 +1626,13 @@ footer {
         <h2 class="sec-h">Solicite seu<br><em>Orçamento Grátis</em></h2>
         <p class="sec-sub" style="margin-top:20px">Atendemos Aripuanã e região com agilidade e profissionalismo.</p>
         <div class="c-items">
-        
+          <div class="c-item">
+            <div class="c-ico-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 2.5a16 16 0 007 7L18 16l5 2v4a2 2 0 01-2 2C7.2 24 0 16.8 0 8a2 2 0 012-2l3-2z" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div>
+              <div class="c-lbl">Telefone Fixo</div>
+              <div class="c-val"><a href="tel:6635652217">(66) 3565-2217</a></div>
+            </div>
+          </div>
           <div class="c-item">
             <div class="c-ico-wrap" style="background:var(--green)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
             <div>
@@ -1895,19 +1834,24 @@ function sendWA(){
   if(m) t+=`\n*Observações:* ${m}`;
   window.open('https://wa.me/5566984296918?text='+encodeURIComponent(t),'_blank');
 }
-
-// Tabs
+  // Function for Tabs
 function openTab(evt, tabName) {
   var i, tabpane, tablinks;
+  
+  // Esconde todos os conteúdos das abas
   tabpane = document.getElementsByClassName("tab-pane");
   for (i = 0; i < tabpane.length; i++) {
     tabpane[i].style.display = "none";
     tabpane[i].classList.remove("active");
   }
+
+  // Remove a classe "active" de todos os botões
   tablinks = document.getElementsByClassName("tab-btn");
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
+
+  // Mostra a aba atual e adiciona a classe active ao botão
   document.getElementById(tabName).style.display = "block";
   document.getElementById(tabName).classList.add("active");
   evt.currentTarget.className += " active";
