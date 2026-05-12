@@ -1722,6 +1722,24 @@ html { overflow-x: hidden; }
     padding: 20px 15px 15px;
   }
 }
+	/* Localize este bloco e altere o primeiro valor do padding */
+.hero-inner {
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 20px 28px 80px; /* Era 60px no topo */
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+	@media(max-width:768px) {
+  body { padding-top: 80px; } /* Era 110px */
+  .nav-logo { height: 70px !important; }
+  /* ... resto do código */
+}
 </style>
 </head>
 <body>
