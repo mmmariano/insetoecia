@@ -2701,5 +2701,62 @@ function sendWA() {
   window.open('https://wa.me/5566984296918?text=' + encodeURIComponent(t), '_blank');
 }
 </script>
+<script>
+// 1. FUNÇÃO DAS ABAS (TABS) - CORRIGIDA
+function openTab(evt, tabName) {
+  const panes = document.querySelectorAll(".tab-pane");
+  const btns = document.querySelectorAll(".tab-btn");
+
+  // Esconde todos os conteúdos
+  panes.forEach(pane => {
+    pane.style.display = "none";
+    pane.classList.remove("active");
+  });
+
+  // Desativa todos os botões
+  btns.forEach(btn => btn.classList.remove("active"));
+
+  // Mostra a aba clicada
+  const target = document.getElementById(tabName);
+  if (target) {
+    target.style.display = "block";
+    target.classList.add("active");
+    evt.currentTarget.classList.add("active");
+  }
+}
+
+// 2. MENU MOBILE
+const burger = document.getElementById('burger');
+const mmenu = document.getElementById('mmenu');
+if (burger) {
+  burger.onclick = () => {
+    burger.classList.toggle('open');
+    mmenu.classList.toggle('open');
+  };
+}
+function closeMobile() {
+  burger.classList.remove('open');
+  mmenu.classList.remove('open');
+}
+
+// 3. CURSOR E ANIMAÇÕES (REVEAL)
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('on');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// 4. WHATSAPP FORM
+function sendWA() {
+  const n = document.getElementById('fn').value;
+  const p = document.getElementById('fp').value;
+  const s = document.getElementById('fs').value;
+  const m = document.getElementById('fm').value;
+  const text = `Olá! Nome: ${n}, Telefone: ${p}, Serviço: ${s}. Obs: ${m}`;
+  window.open(`https://wa.me/5566984296918?text=${encodeURIComponent(text)}`);
+}
+</script>
 </body>
 </html>
