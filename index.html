@@ -2605,6 +2605,101 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).classList.add("active");
   evt.currentTarget.className += " active";
 }
+
+	// 1. FUNÇÃO DAS ABAS (TABS) - CORRIGIDA
+function openTab(evt, tabName) {
+  const panes = document.querySelectorAll(".tab-pane");
+  const btns = document.querySelectorAll(".tab-btn");
+
+  // Esconde todas as abas
+  panes.forEach(pane => {
+    pane.style.display = "none";
+    pane.classList.remove("active");
+  });
+
+  // Remove classe active de todos os botões
+  btns.forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  // Mostra a aba clicada e ativa o botão
+  const targetPane = document.getElementById(tabName);
+  if (targetPane) {
+    targetPane.style.display = "block";
+    setTimeout(() => targetPane.classList.add("active"), 10);
+    evt.currentTarget.classList.add("active");
+  }
+}
+
+// 2. CURSOR PERSONALIZADO (COM PROTEÇÃO CONTRA ERROS)
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cring');
+let mx=0, my=0, rx=0, ry=0;
+
+if (cur && ring) {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx + 'px';
+    cur.style.top = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+}
+
+// 3. MENU MOBILE E SCROLL
+const burger = document.getElementById('burger');
+const mmenu = document.getElementById('mmenu');
+const nav = document.getElementById('nav');
+
+if (burger) {
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mmenu.classList.toggle('open');
+  });
+}
+
+window.addEventListener('scroll', () => {
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+function closeMobile() {
+  burger.classList.remove('open');
+  mmenu.classList.remove('open');
+}
+
+// 4. REVEAL ON SCROLL
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('on');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+// 5. ENVIO WHATSAPP
+function sendWA() {
+  const n = document.getElementById('fn').value.trim() || 'Visitante';
+  const p = document.getElementById('fp').value.trim() || 'Não informado';
+  const cid = document.getElementById('fcid').value.trim() || 'Não informada';
+  const e = document.getElementById('fe').value || 'Não informado';
+  const s = document.getElementById('fs').value || 'Não informado';
+  const m = document.getElementById('fm').value.trim();
+
+  let t = `Olá! Vim pelo site da *Insetos & Cia*.\n\n`;
+  t += `*Nome:* ${n}\n*Telefone:* ${p}\n*Cidade:* ${cid}\n*Ambiente:* ${e}\n*Serviço:* ${s}`;
+  if(m) t += `\n*Observações:* ${m}`;
+  
+  window.open('https://wa.me/5566984296918?text=' + encodeURIComponent(t), '_blank');
+}
 </script>
 </body>
 </html>
